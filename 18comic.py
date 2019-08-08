@@ -12,7 +12,7 @@ print('url(例如: https://18comic.pro/photo/121906/) = ')
 url = input()
 
 with open('log','a+') as f:
-	f.write('Start downloading:'+url+'\n-----------------------')
+	f.write('\nStart downloading:'+url+'\n-----------------------')
 
 os.system('start python 18comic.py')
 headers={'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36'}
@@ -31,7 +31,11 @@ foldername = soup.title.string
 foldername = foldername.strip('\n')
 foldername = foldername.replace('|','')
 current_dir = os.path.dirname(os.path.abspath(__file__))
-FilePath = current_dir + '\\comic\\'+foldername+'\\'
+comicPath = current_dir + '\\comic\\'
+FilePath = comicPath+foldername+'\\'
+
+if os.path.exists(comicPath) == False:
+	os.mkdir(comicPath)
 
 if os.path.exists(FilePath) == False:
 	os.mkdir(FilePath)
@@ -49,6 +53,6 @@ for imageLink in res_images_link:
 	sys.stdout.flush()
 	
 with open('log','a+') as f:
-	f.write('Finished downloading:'+url+'\n-----------------------')
+	f.write('\nFinished downloading:'+url+'\n-----------------------')
 input('\n下载完成!! 已保存到: '+FilePath)
 
